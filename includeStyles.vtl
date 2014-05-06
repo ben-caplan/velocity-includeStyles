@@ -1,0 +1,13 @@
+## INCLUDE STYLES MACRO
+#macro( includeStyles $relPath $server )##
+#if( !$UtilMethods.isSet($server) )##
+#set( $server = request.getServerName() )##
+#end##
+$import.read("http://${server}${relPath}").replaceAll("\s+", ' ').replaceAll("/\*[^\*]*\*/", '')​​​##
+#end##
+
+#*
+## USE
+#includeStyles( '/common/css/aquent.2.0.css' )##
+#includeStyles( '/common/css/aquent.2.0.css' 'vitamint.aquent.com' )##
+*#
