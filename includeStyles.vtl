@@ -1,7 +1,7 @@
 ## INCLUDE STYLES MACRO
 #macro( includeStyles $relPath $server )##
 #if( !$UtilMethods.isSet($server) )##
-#set( $server = request.getServerName() )##
+#set( $server = $request.getServerName() )##
 #end##
 $import.read("http://${server}${relPath}").replaceAll("\s+", ' ').replaceAll("/\*[^\*]*\*/", '')​​​##
 #end##
