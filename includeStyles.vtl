@@ -1,10 +1,21 @@
 ## INCLUDE STYLES MACRO
-#macro( includeStyles $relPath $server )##
-#if( !$UtilMethods.isSet($server) )##
-#set( $server = $request.getServerName() )##
-#end##
-$import.read("http://${server}${relPath}").replaceAll("\s+", ' ').replaceAll("/\*[^\*]*\*/", '')​​​##
-#end##
+#set( $inlineIncludedFile = [] )##
+#macro( includeStyles $relPath $domain )##
+#if( $inlineIncludedFile.indexOf($relPath) < 0 )##
+#set( $_dummy = $inlineIncludedFile.add($relPath) )##
+#if( !$UtilMethods.isSet($domain) )##
+#set( $domain = $request.getServerName() )##
+#end##isSet($domain)
+/* FILE: http://${domain}${relPath} */
+#set( $_file = $import.read("http://${domain}${relPath}") )##
+#if( $UtilMethods.isSet($_file) )##
+$_file.replaceAll("\s+", ' ').replaceAll("/\*[^\*]*\*/", '')​​​##
+#end##isSet($css)
+#end## if $relPath is not in $inlineIncludedFile array
+## RESET VARS
+#set( $_file = '' )##
+#set( $domain = '' )##
+#end##includeStyles()
 
 #*
 ## USE
